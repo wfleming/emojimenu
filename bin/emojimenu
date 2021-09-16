@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+src="$(dirname $(readlink -f "$0"))/../data/emojilist.txt"
+cat "$src" | \
+  rofi -dmenu -p "emoji: " | \
+  sed 's/^.*: \(.*\)/\1/' | \
+  xclip -selection clipboard
