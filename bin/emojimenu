@@ -1,8 +1,14 @@
 #!/bin/sh
 set -e
 
+if [[ -n $WAYLAND_DISPLAY ]]; then
+  dmenu='bemenu --no-overlap --ignorecase -pemoji:'
+else
+  dmenu='rofi -dmenu -p emoji'
+fi
+
 src="$(dirname $(readlink -f "$0"))/../data/emojilist.txt"
 cat "$src" | \
-  rofi -dmenu -p "emoji: " | \
+  $dmenu | \
   sed 's/^.*: \(.*\)/\1/' | \
   xclip -selection clipboard
