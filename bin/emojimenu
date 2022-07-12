@@ -2,8 +2,10 @@
 set -e
 
 if [[ -n $WAYLAND_DISPLAY ]]; then
+  clip='wl-copy'
   dmenu='bemenu --no-overlap --ignorecase -pemoji:'
 else
+  clip='xclip -selection clipboard'
   dmenu='rofi -dmenu -p emoji'
 fi
 
@@ -11,4 +13,4 @@ src="$(dirname $(readlink -f "$0"))/../data/emojilist.txt"
 cat "$src" | \
   $dmenu | \
   sed 's/^.*: \(.*\)/\1/' | \
-  xclip -selection clipboard
+  $clip
